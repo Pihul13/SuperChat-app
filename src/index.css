@@ -17,15 +17,32 @@ body{
   color:white;
 }
 .container{
-  width:90vw;
+  width:80vw;
   height:90vh;
   /* to be modified  */
   background-color: rgba(2, 7, 50, 0.477);
-  backdrop-filter: blur(10px) saturate(180%);
+  backdrop-filter: blur(15px) saturate(250%);
   border-radius: 12px;
   border:1px solid rgba(145, 145, 145, 0.296);
   box-shadow: 0 0 20px 1px rgba(20, 20, 20, 0.955);
   /* to be modified  */
-
+  overflow: hidden;
   display: flex;
+}
+
+/* handling scroll bar for edge  */
+
+ /* width */
+ ::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #dddddd35;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #ffffff6f;
 }

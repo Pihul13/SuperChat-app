@@ -34,15 +34,15 @@ body{
 
  /* width */
  ::-webkit-scrollbar {
-  width: 5px;
+  width: 1px;
 }
 
 /* Track */
 ::-webkit-scrollbar-track {
-  background: #dddddd35;
+  background: #dddddd00;
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #ffffff6f;
+  background: #ffffffb4;
 }

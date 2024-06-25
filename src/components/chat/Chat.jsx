@@ -1,14 +1,22 @@
 import "./chat.css"
 import { useEffect, useState, useRef } from "react";
 import EmojiPicker from "emoji-picker-react";
-import { doc, onSnapshot } from "firebase/firestore";
+import { arrayUnion, doc, getDoc, onSnapshot, updateDoc } from "firebase/firestore";
 import { db } from "../../lib/firebase";
 import useChatStore from "../../lib/chatStore";
+import useUserStore from "../../lib/userStore";
+import upload from "../../lib/upload";
 
 const Chat = () => {
 const [open,setOpen]=useState(false);
 const [text,setText]=useState("");
-const { chatId }=useChatStore()
+const { chatId, user, isCurrentUserBlocked, isRecieverBlocked }=useChatStore();
+const {currentUser}=useUserStore();
+const [img,setImg]=useState({
+    file:null,
+    url:"",
+}); // functionality to upload image
+
 // for scrolling 
 const endRef=useRef(null); 
 
@@ -35,19 +43,87 @@ console.log(chat);
 
 
 
+const handleSend= async ()=>{
+    if(text==="")return;
+    let imgUrl=null;
+
+    try{
+
+        if(img.file){
+            imgUrl=await upload(img.file);
+        }
+
+        await updateDoc(doc(db,"chats",chatId),{
+            messages:arrayUnion({
+                senderId:currentUser.id,
+                text,
+                createdAt:new Date(),
+                ...(imgUrl && {img: imgUrl}), // if its null we won't be putting
+            })
+        });
+
+const userIDs=[currentUser.id,user.id];
+
+userIDs.forEach(async (id)=>{ // for current active user and opponent
+
+    
+    // to make the "wethere seen or not"
+
+        const userChatsRef=doc(db,"userchats",id);
+        const userChatsSnapshot= await getDoc(userChatsRef);
+        if(userChatsSnapshot.exists()){
+            const userChatsData=userChatsSnapshot.data();
+
+            // finding current chat index
+            const chatIndex = userChatsData.chats.findIndex(c=>c.chatId === chatId);
+// for active user
+            userChatsData.chats[chatIndex].lastMessage=text;
+            userChatsData.chats[chatIndex].isSeen=id===currentUser.id?true:false;
+            userChatsData.chats[chatIndex].updatedAt=Date.now();
+
+            await updateDoc(userChatsRef,{
+                chats: userChatsData.chats,
+            });
+        }
+
+    });
+        
+    }catch(err){
+        console.log(err);
+    }
+
+
+    setImg({
+        file:null,
+        url:"",
+    });
+    setText("");
+}
+
+
+
 // message sending done -------------------------------
 const handleEmoji=(e)=>{
     setText((prev)=>prev+e.emoji);
     setOpen(false);
 };
+
+const handleImg=(e)=>{
+    if(e.target.files[0]){ setImg({
+         file:e.target.files[0],
+         url: URL.createObjectURL(e.target.files[0])
+     })
+   }
+ }
+
 console.log(text);
     return (
         <div className='chat'>
             <div className="top">
                 <div className="user">
-                    <img src="./avatar.png" alt=""/>
+                    <img src={user?.avatar || "./avatar.png"} alt=""/>
                     <div className="texts">
-                        <span>Rohan Kumar</span>
+                        <span>{user?.username}</span>
                         <p>hello this is only for testing</p>
                     </div>
                 </div>
@@ -61,7 +137,7 @@ console.log(text);
 {/* message break */}
         {chat?.messages?.map((message)=>(
 
-            <div className="message own" key={message?.createdAt}>
+            <div className={message.senderId===currentUser?.id?"message own":"message"} key={message?.createdAt}>
                     <div className="texts">
                     {/* when an image is sent  */}
                         { message.img && <img src={message.img}alt=""/>}
@@ -74,6 +150,14 @@ console.log(text);
 
             ))}
 
+{ img.url && (
+            <div className="message own">
+                <div className="texts">
+                    <img src={img.url} alt=""/>
+                </div>
+            </div>
+)}
+
 {/* message break  */}
 {/* to scroll initial  */}
             <div ref={endRef}></div>
@@ -81,18 +165,24 @@ console.log(text);
             </div>
             <div className="bottom">
                 <div className="icons">
+                    <label htmlFor="file">
+
                     <img src="./img.png" alt=""/>
+                    </label>
+                    <input type="file" id="file" style={{display:"none"}} onChange={handleImg} />
                     <img src="./camera.png" alt=""/>
                     <img src="./mic.png" alt=""/>
                 </div>
-                <input type="text" placeholder="Type a message..." value={text} onChange={(e)=>setText(e.target.value)}/>
+                <input type="text" placeholder={(isCurrentUserBlocked||isRecieverBlocked)?"You cannot send a message":"Type a message..."} value={text} onChange={(e)=>setText(e.target.value)}
+                disabled={isCurrentUserBlocked || isRecieverBlocked}
+                />
                 <div className="emoji">
                     <img src="./emoji.png" alt="" onClick={()=>setOpen(!open)}/>
                     <div className="picker">
                     <EmojiPicker open={open} onEmojiClick={handleEmoji}/>
                     </div>
                 </div>
-                <button className="sendButton">Send</button>
+                <button className="sendButton" onClick={handleSend} disabled={isCurrentUserBlocked || isRecieverBlocked}>Send</button>
             </div>
         </div>
     );

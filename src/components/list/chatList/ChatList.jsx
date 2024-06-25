@@ -18,17 +18,17 @@ const ChatList = () => {
             const items=res.data().chats; // lists
 
             const promises = items.map(async(item)=>{
-                const userDocRef = doc(db,"users",item.reciverId);
+                const userDocRef = doc(db,"users",item.recieverId);
                 const userDocSnap = await getDoc(userDocRef); // getting the user information of the reciever from the recieverID
 
                 const user=userDocSnap.data();
 
-                return {...item,user}; // chat_id, reciever_id, isseen, lastmessage, updatedAt, user(this has the name, avatar, email, blockedlist)
+                return {...item,user}; // mergin user in item
             });
 
             const chatData = await Promise.all(promises);
 
-            setChats(chatData.sort((a,b)=>b.updatedAt-a.updatedAt));
+            setChats(chatData.sort((a,b)=>b.updatedAt-a.updatedAt));// a and b are objects
 
         });
 
@@ -50,9 +50,9 @@ const ChatList = () => {
         {chats.map((chat)=>( // we need a key for map
 
             <div className="item" key={chat.chatId}>
-                <img src="./avatar.png" alt=""/>
+                <img src={chat.user.avatar || "./avatar.png"} alt=""/>
                 <div className="texts">
-                    <span>Rohan Kumar</span>
+                    <span>{chat.user.username}</span>
                     <p>{chat.lastMessage}</p>
                 </div>
             </div>

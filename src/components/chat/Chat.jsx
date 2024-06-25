@@ -1,10 +1,14 @@
 import "./chat.css"
 import { useEffect, useState, useRef } from "react";
 import EmojiPicker from "emoji-picker-react";
+import { doc, onSnapshot } from "firebase/firestore";
+import { db } from "../../lib/firebase";
+import useChatStore from "../../lib/chatStore";
 
 const Chat = () => {
 const [open,setOpen]=useState(false);
 const [text,setText]=useState("");
+const { chatId }=useChatStore()
 // for scrolling 
 const endRef=useRef(null); 
 
@@ -12,6 +16,26 @@ useEffect(()=>{
     endRef.current?.scrollIntoView({ behavior: "smooth" });
 },[]);
 
+// implementing the message sending -----------------------------
+const [chat,setChat]=useState();
+
+useEffect(()=>{
+    const unSub=onSnapshot(doc(db,"chats",chatId),(res)=>{
+        setChat(res.data())
+    });
+
+    return ()=>{
+        unSub();
+    };
+
+},[chatId]);
+
+console.log(chat);
+
+
+
+
+// message sending done -------------------------------
 const handleEmoji=(e)=>{
     setText((prev)=>prev+e.emoji);
     setOpen(false);
@@ -35,84 +59,20 @@ console.log(text);
             </div>
             <div className="center">
 {/* message break */}
+        {chat?.messages?.map((message)=>(
 
-                <div className="message">
-                    <img src="./avatar.png" alt=""/>
-                    <div className="texts">
-                        <p>
-                            ehllo mello rohan is here
-                        </p>
-                        <span>1 min ago</span>
-                    </div>
-                </div>
-
-                <div className="message own">
-                    <div className="texts">
-                        <p>
-                            ehllo mello rohan is here
-                        </p>
-                        <span>1 min ago</span>
-                    </div>
-                </div>
-
-                <div className="message">
-                    <img src="./avatar.png" alt=""/>
-                    <div className="texts">
-                        <p>
-                            ehllo mello rohan is here
-                        </p>
-                        <span>1 min ago</span>
-                    </div>
-                </div>
-
-                <div className="message own">
-                    <div className="texts">
-                        <p>
-                            ehllo mello rohan is here
-                        </p>
-                        <span>1 min ago</span>
-                    </div>
-                </div>
-
-                <div className="message">
-                    <img src="./avatar.png" alt=""/>
-                    <div className="texts">
-                        <p>
-                            ehllo mello rohan is here
-                        </p>
-                        <span>1 min ago</span>
-                    </div>
-                </div>
-
-                <div className="message own">
-                    <div className="texts">
-                        <p>
-                            ehllo mello rohan is here
-                        </p>
-                        <span>1 min ago</span>
-                    </div>
-                </div>
-
-                <div className="message">
-                    <img src="./avatar.png" alt=""/>
-                    <div className="texts">
-                        <p>
-                            ehllo mello rohan is here
-                        </p>
-                        <span>1 min ago</span>
-                    </div>
-                </div>
-
-                <div className="message own">
+            <div className="message own" key={message?.createdAt}>
                     <div className="texts">
                     {/* when an image is sent  */}
-                        <img src="./imagesent.jpg" alt=""/>
+                        { message.img && <img src={message.img}alt=""/>}
                         <p>
-                            ehllo mello rohan is here
+                            {message.text}
                         </p>
-                        <span>1 min ago</span>
+                        {/* <span>1 min ago</span> */}
                     </div>
                 </div>
+
+            ))}
 
 {/* message break  */}
 {/* to scroll initial  */}

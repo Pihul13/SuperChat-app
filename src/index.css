@@ -38,6 +38,14 @@ body{
   background-color: rgba(17,25,40,0.9);
 }
 
+
+@media screen and (max-width:800px){
+  .container{
+    width:fit-content;
+  }
+}
+
+
 /* handling scroll bar for edge  */
 
  /* width */

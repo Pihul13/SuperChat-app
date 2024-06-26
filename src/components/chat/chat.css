@@ -121,7 +121,7 @@
 
                 p{  word-wrap: break-word;
                     overflow-wrap: break-word;
-                    
+                    font-size: 12px;
                     min-width: 40px;
                     max-width: 300px;
                     padding:8px;
@@ -204,4 +204,226 @@
             }
         }
     }
+}
+
+
+@media screen and (max-width: 800px) {
+
+
+    .chat{
+        flex:2;
+        border-left:1px solid #dddddd35;
+        border-right:1px solid #dddddd35;
+        height:100%;
+        display:flex;
+        flex-direction: column;
+        &.dis{
+            display:none;
+        }
+        .top{
+            padding-right:5px;
+            padding-top:5px;
+            padding-bottom: 5px;
+            display:flex;
+            align-items:center;
+            justify-content: space-between;
+            border-bottom:1px solid #dddddd35;
+            cursor: pointer;
+            &:hover{
+                background-color: #dddddd1f;
+            }
+    
+            .user{
+                width:100%;
+                display:flex;
+                align-items: center;
+                gap:5px;
+    
+                img{
+                    width:30px;
+                    height:30px;
+                    border-radius:50%;
+                    object-fit:cover;
+                }
+    
+                .texts{
+                    display:flex;
+                    flex-direction:column;
+                    gap:1px;
+    
+                    span{
+                        font-size:15px;
+                        font-weight:bold;
+                    }
+    
+                    p{
+                        font-size:10px;
+                        font-weight:300;
+                        color:#a5a5a5;
+                    }
+                }
+            }
+            .icons{
+                display:flex;
+                gap:10px;
+    
+                img{
+                    width:15px;
+                    height: 15px;
+                }
+            }
+    
+            /* for the back button  */
+            .gobackwrapper {
+                height: 100%;
+                display: flex;
+                justify-items: center;
+                align-items: center;
+                padding-right: 5px;
+                padding-left: 10px;
+                cursor: pointer;
+            }
+            
+            .gobackwrapper img {
+                height: 20px;
+                width: 10px;
+                transition: transform 0.3s ease;
+            }
+            
+            .gobackwrapper:hover img {
+                transform: scale(1.2);
+            }
+            
+        }
+    
+        .center{
+            overflow-x: hidden;
+            padding:10px;
+            /* flex:1; */
+            overflow-y: scroll;
+            display: flex;
+            flex-direction: column;
+            gap:5px;
+    
+            .message{
+                max-width: 70%;
+                display:flex;
+                gap:5px;
+    
+                &.own{
+                    align-self: flex-end;
+                    .texts{
+                        align-items: flex-end;
+                        p{
+                            background-color: #5183fe;
+                        }
+                    }
+                }
+    
+                .texts{
+                    flex:1;
+                    display:flex;
+                    flex-direction:column;
+                    gap:3px;
+                    img{
+                        width:100%;
+                        height:auto;
+                        object-fit: contain;
+                    }
+    
+                    p{  word-wrap: break-word;
+                        overflow-wrap: break-word;
+                        
+                        min-width: 20px;
+                        max-width: 150px;
+                        padding:4px;
+                        background-color: rgba(17,25,40,0.3);
+                        border-radius: 10px;
+                    }
+                    span{
+                        font-size:13px;
+                    }
+                }
+            }
+            .imgdivwrapper{
+                width:100px;
+                height:100px;
+                overflow: hidden;
+                border-radius: 10px;
+                border:2px solid #5183fe;
+                display:flex;
+                justify-content: center;
+                align-items: center;
+            }
+        }
+    
+        .bottom{
+            padding:10px;
+            display:flex;
+            align-items:center;
+            justify-content: space-between;
+            border-top:1px solid #dddddd35;
+            gap:5px;
+            margin-top:auto;
+    
+            .icons{
+                display:flex;
+                gap:10px;
+                align-items: center;
+            }
+            img{
+                width:15px;
+                height:15px;
+                cursor:pointer;
+            }
+    
+            input{
+                flex:1;
+                background-color: rgba(17,25,40,0.5);
+                border:none;
+                outline: none;
+                color:white;
+                padding:10px;
+                border-radius: 10px;
+                font-size:8px;
+    
+                &:disabled{
+                    cursor:not-allowed;
+                }
+            }
+    
+            .emoji{
+                position:relative;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                .picker{
+                    position:absolute;
+                    right:0;
+                }
+            }
+    
+            .sendButton{
+                background-color: #5183fe;
+                color:white;
+                padding:2px 15px;
+                border:none;
+                border-radius:5px;
+                cursor:pointer;
+    
+                &:disabled{
+                    background-color: #5182feb4;
+                    cursor:not-allowed;
+                }
+            }
+        }
+        .camlabel{
+            display: flex;
+            justify-items: center;
+            align-items: center;
+        }
+    }
+
+
+
 }

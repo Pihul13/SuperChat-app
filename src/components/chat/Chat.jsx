@@ -172,7 +172,7 @@ console.log(text);
             </div>
             <div className="bottom">
                 <div className="icons">
-                    <label htmlFor="file">
+                    <label className="camlabel"htmlFor="file">
 
                     <img src="./img.png" alt=""/>
                     </label>

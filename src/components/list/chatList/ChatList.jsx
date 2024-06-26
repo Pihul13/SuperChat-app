@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import "./chatList.css"
 import AddUser from "./addUser/AddUser";
-import useUserStore from "../../../lib/userStore";
+import useUserStore from "../../../elements/userStore";
 import { doc, getDoc, onSnapshot, updateDoc } from "firebase/firestore";
-import { db } from "../../../lib/firebase";
-import useChatStore from "../../../lib/chatStore";
+import { db } from "../../../elements/firebase";
+import useChatStore from "../../../elements/chatStore";
 
-const ChatList = () => {
+const ChatList = (props) => {
     const [addMode,setaddMode]=useState(false);
     const [chats,setChats]=useState([]);
 
@@ -95,9 +95,9 @@ const ChatList = () => {
         { filteredChats.map((chat)=>( // we need a key for map
 
             <div className="item" key={chat.chatId} 
-            onClick={()=>handleSelect(chat)}
+            onClick={()=>{handleSelect(chat); props.setHometochat(false); console.log(props.hometochat);}}
             style={{
-                backgroundColor:chat?.isSeen?"transparent":"#5183fe"
+                backgroundColor:chat?.isSeen?"":"#5183fe"
             }}
             >
                 <img src={ chat.user.blocked.includes(currentUser.id)?"./avatar.png": chat.user.avatar || "./avatar.png"} alt=""/>

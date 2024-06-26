@@ -2,12 +2,12 @@ import "./chat.css"
 import { useEffect, useState, useRef } from "react";
 import EmojiPicker from "emoji-picker-react";
 import { arrayUnion, doc, getDoc, onSnapshot, updateDoc } from "firebase/firestore";
-import { db } from "../../lib/firebase";
-import useChatStore from "../../lib/chatStore";
-import useUserStore from "../../lib/userStore";
-import upload from "../../lib/upload";
+import { db } from "../../elements/firebase";
+import useChatStore from "../../elements/chatStore";
+import useUserStore from "../../elements/userStore";
+import upload from "../../elements/upload";
 
-const Chat = () => {
+const Chat = (props) => {
 const [open,setOpen]=useState(false);
 const [text,setText]=useState("");
 const { chatId, user, isCurrentUserBlocked, isRecieverBlocked }=useChatStore();
@@ -118,9 +118,12 @@ const handleImg=(e)=>{
 
 console.log(text);
     return (
-        <div className='chat'>
+        <div className={(props.usersetting && !props.hometochat)?"chat":"chat dis"}>
             <div className="top">
-                <div className="user">
+                <div className="gobackwrapper" onClick={()=>{props.setHometochat(true);}}>
+                    <img src="./goback.png" alt=""/>
+                </div>
+                <div className="user" onClick={()=>{props.setUsersetting(false);}}>
                     <img src={user?.avatar || "./avatar.png"} alt=""/>
                     <div className="texts">
                         <span>{user?.username}</span>
@@ -140,7 +143,9 @@ console.log(text);
             <div className={message.senderId===currentUser?.id?"message own":"message"} key={message?.createdAt}>
                     <div className="texts">
                     {/* when an image is sent  */}
-                        { message.img && <img src={message.img}alt=""/>}
+                    
+                        { message.img && <div className="imgdivwrapper"><img src={message.img}alt=""/> </div>}
+                   
                         <p>
                             {message.text}
                         </p>
@@ -153,7 +158,9 @@ console.log(text);
 { img.url && (
             <div className="message own">
                 <div className="texts">
+                    <div className="imgdivwrapper">
                     <img src={img.url} alt=""/>
+                    </div>
                 </div>
             </div>
 )}

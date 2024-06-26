@@ -1,5 +1,10 @@
 .list{
     flex:1;
-    display: flex;
+    /* display: none; */
     flex-direction:column;
+    overflow: scroll;
+    height: 100%;
+    &.dis{
+        display: none;
+    }
 }

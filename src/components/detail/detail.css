@@ -1,6 +1,12 @@
 .detail{
-    flex:1;
+    flex:2;
     overflow-y: scroll;
+    border-left:1px solid #dddddd35;
+    border-right:1px solid #dddddd35;
+    &.dis{
+        display:none;
+    }
+
     .user{
         padding:30px 20px;
         display:flex;
@@ -8,7 +14,10 @@
         align-items: center;
         gap:15px;
         border-bottom:1px solid #dddddd35;
-
+        cursor:pointer;
+        &:hover{
+            background-color: #1a73e854;
+        }
         img{
             width:100px;
             height:100px;
@@ -96,6 +105,9 @@
             &.logout{
                 padding:10px;
                 background-color: #1a73e8;
+                &:hover{
+                    background-color: #1a73e880
+                }
             }
         }
 

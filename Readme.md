@@ -18,23 +18,21 @@ This is a real-time chat application built using Firebase, Vite, Zustand, and To
 
 1. Clone the repository:
 
-    ```sh
+    ```
     git clone https://github.com/yourusername/your-repo-name.git
     cd your-repo-name
     ```
 
 2. Install the dependencies:
 
-    ```sh
-    npm install
+    ```npm install
     ```
 
 ### Running the Application
 
 To start the development server, run:
 
-```sh
-npm run dev
+```npm run dev
 ```
 
 In the termial you will get the Local Host link

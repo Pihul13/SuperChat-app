@@ -1,11 +1,11 @@
 import "./list.css"
 import Userinfo from "./userInfo/Userinfo"
 import ChatList from "./chatList/ChatList"
-const List = () => {
+const List = (props) => {
     return (
-        <div className='list'>
+        <div className={props.hometochat?"list":"list dis"}>
             <Userinfo/>
-            <ChatList/>
+            <ChatList hometochat={props.hometochat} setHometochat={props.setHometochat}/>
         </div>
     );
 }

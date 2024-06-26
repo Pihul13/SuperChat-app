@@ -1,9 +1,9 @@
 import { arrayRemove, arrayUnion, doc, updateDoc } from "firebase/firestore";
-import useChatStore from "../../lib/chatStore";
-import { auth, db } from "../../lib/firebase";
-import useUserStore from "../../lib/userStore";
+import useChatStore from "../../elements/chatStore";
+import { auth, db } from "../../elements/firebase";
+import useUserStore from "../../elements/userStore";
 import "./detail.css"
-const Detail = () => {
+const Detail = (props) => {
     const {chatId, user, isCurrentUserBlocked, isRecieverBlocked, changeBlock}=useChatStore();
     const {currentUser}=useUserStore();
 
@@ -28,8 +28,10 @@ const Detail = () => {
     };
 
     return (
-        <div className='detail'>
-            <div className="user">
+        <div className={props.usersetting?"detail dis":"detail"}>
+            <div className="user" onClick={()=>{
+                props.setUsersetting(true);
+            }}>
                 <img src={user?.avatar || "./avatar.png"} alt=""/>
                 <h2>{user?.username}</h2>
                 <p>this is the sender's description</p>

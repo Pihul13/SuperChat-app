@@ -3,16 +3,21 @@ import Chat from "./components/chat/Chat"
 import Detail from "./components/detail/Detail"
 import Login from "./components/login/Login"
 import Notification from "./components/notification/Notification"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { onAuthStateChanged } from "firebase/auth"
-import { auth } from "./lib/firebase"
-import useUserStore from "./lib/userStore"
-import useChatStore from "./lib/chatStore"
+import { auth } from "./elements/firebase"
+import useUserStore from "./elements/userStore"
+import useChatStore from "./elements/chatStore"
 
 const App = () => {
 
 const {currentUser,isLoading,fetchUserInfo}=useUserStore();
 const {chatId}=useChatStore();
+
+const [usersetting,setUsersetting]=useState(true); // true means chat , false means setting page
+const [hometochat,setHometochat]=useState(true);
+// true means home.. false means chat
+
 // getting the login logout status
     useEffect(()=>{
       const unSub = onAuthStateChanged(auth,(user)=>{
@@ -34,9 +39,9 @@ const {chatId}=useChatStore();
       { 
         currentUser?(
           <>
-          <List/>
-          {chatId && <Chat/>}
-          {chatId && <Detail/>}
+          <List hometochat={hometochat} setHometochat={setHometochat}/>
+          {chatId && <Chat usersetting={usersetting} setUsersetting={setUsersetting} hometochat={hometochat} setHometochat={setHometochat}/>}
+          {chatId && <Detail usersetting={usersetting} setUsersetting={setUsersetting}/>}
           </>
         ):(<Login/>)
       }

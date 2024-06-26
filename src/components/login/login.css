@@ -67,3 +67,78 @@
         background-color: #dddddd35;
     }
 }
+
+@media screen and (max-width:800px){
+    .login{
+        width:100%;
+        height:100%;
+        display:flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items:center;
+        gap:10px;
+        font-size: x-small;
+        .item{
+            margin:40px;
+            flex:1;
+            display:flex;
+            flex-direction: column;
+            align-items:center;
+            gap:10px;
+            justify-content: center;
+            form{
+                display:flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap:10px;
+    
+                input{
+                    font-size: x-small;
+                    padding:15px;
+                    border:none;
+                    outline:none;
+                    background-color: rgba(17,25,40,0.6);
+                    color:white;
+                    border-radius:5px;
+                }
+    
+                label{
+                    width:100%;
+                    display:flex;
+                    align-items:center;
+                    justify-content:flex-start;
+                    cursor: pointer;
+                    text-decoration: underline;
+    
+                    img{ margin-right:10px;
+                        width:30px;
+                        height:30px;
+                        border-radius:5px;
+                        object-fit:cover;
+                        opacity: 0.75;
+                    }
+                }
+                button{
+                    width:100%;
+                    padding:10px;
+                    border:none;
+                    background-color: #1f8ef1;
+                    color:white;
+                    border-radius: 5px;
+                    cursor:pointer;
+                    font-weight: 500;
+                    font-size: x-small;
+                    &:disabled{
+                        cursor: not-allowed;
+                        background-color:#1f8ff1b2;
+                    }
+                }
+            }
+        }
+        .separator{
+            width: calc(100% - 20px);
+            height:8px;
+        }
+    }
+}

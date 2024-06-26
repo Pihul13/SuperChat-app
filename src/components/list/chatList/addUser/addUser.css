@@ -61,3 +61,11 @@
         }
     }
 }
+
+@media screen and (max-width:800px){
+    .addUser{
+        position:relative;
+        top:-590px;
+        transform: scale(0.7);
+    }
+}

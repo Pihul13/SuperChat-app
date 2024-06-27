@@ -41,7 +41,7 @@ body{
 
 @media screen and (max-width:800px){
   .container{
-    width:fit-content;
+    width:95vw;
   }
 }
 
@@ -61,4 +61,25 @@ body{
 /* Handle */
 ::-webkit-scrollbar-thumb {
   background: #ffffffb4;
+}
+
+
+
+
+.emoji .EmojiPickerReact {
+  --epr-emoji-size: 18px;
+  --epr-emoji-gap: 10px;
+  --epr-hover-bg-color: #d3d3d3;
+  --epr-bg-color: #ffffff;
+  --epr-text-color: #000000;
+  --epr-category-label-bg-color: #ffffff;
+  font-size: 10px;
+}
+
+.emoji .EmojiPickerReact .epr-search {
+  font-size: 12px;
+}
+
+.emoji .EmojiPickerReact .epr-emoji-category-label {
+  font-size: 10px;
 }

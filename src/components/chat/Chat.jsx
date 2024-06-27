@@ -186,7 +186,7 @@ console.log(text);
                 <div className="emoji">
                     <img src="./emoji.png" alt="" onClick={()=>setOpen(!open)}/>
                     <div className="picker">
-                    <EmojiPicker open={open} onEmojiClick={handleEmoji}/>
+                    <EmojiPicker open={open} onEmojiClick={handleEmoji} height={300} width={300}/>
                     </div>
                 </div>
                 <button className="sendButton" onClick={handleSend} disabled={isCurrentUserBlocked || isRecieverBlocked}>Send</button>

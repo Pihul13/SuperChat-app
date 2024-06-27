@@ -1,9 +1,8 @@
 .list{
     flex:1;
     /* display: none; */
-    flex-direction:column;
     overflow: scroll;
-    height: 100%;
+    flex-direction:column;
     &.dis{
         display: none;
     }

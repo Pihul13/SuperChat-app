@@ -89,7 +89,16 @@ const ChatList = (props) => {
                     <img src="./search.png" alt=""/>
                     <input type="text" placeholder="Search" onChange={(e)=>setInput(e.target.value)}/>
                 </div>
+
+                <div className="add_user_search">    
+
                 <img src={!addMode?"./plus.png":"./minus.png"} alt="" className="add" onClick={()=>{setaddMode(!addMode)}}/>
+
+                {addMode && <AddUser/>}
+
+                </div>
+
+
             </div>
 {/* break */}
         { filteredChats.map((chat)=>( // we need a key for map
@@ -108,8 +117,7 @@ const ChatList = (props) => {
             </div>
 
         ))}
-{/* break */}
-        {addMode && <AddUser/>} 
+{/* break */} 
         </div>
     );
 }

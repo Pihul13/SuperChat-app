@@ -37,6 +37,9 @@
         border-radius: 10px;
         cursor:pointer;
     }
+    .add_user_search{
+        position: relative;
+    }
 
     .item{
         display:flex;
